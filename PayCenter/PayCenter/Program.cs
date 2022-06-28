@@ -1,11 +1,32 @@
+using NLog.Web;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+// NLog
+//builder.Logging.ClearProviders();
+builder.Logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Debug);
+builder.Host.UseNLog();
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
+
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.CustomSchemaIds(x => x.FullName);
+});
+
+builder.Services.AddSingleton<JsonSerializerOptions>(new JsonSerializerOptions()
+{
+    Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+    WriteIndented = false,
+});
 
 var app = builder.Build();
 
