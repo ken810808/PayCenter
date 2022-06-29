@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 
 namespace PayCenter.MiddleWares
 {
@@ -6,22 +7,22 @@ namespace PayCenter.MiddleWares
     public class TokenAuthMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger<TokenAuthMiddleware> _logger;
 
-        public TokenAuthMiddleware(RequestDelegate next)
+        public TokenAuthMiddleware(RequestDelegate next, ILogger<TokenAuthMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext httpContext)
         {
-           
-
             if (!httpContext.Request.Headers.TryGetValue("Authorization", out var authorization) ||
-               authorization.First() != "token_123")
+               authorization.FirstOrDefault() != "token_123")
             {
                 httpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                 httpContext.Response.ContentType = "text/plain";
-                //await httpContext.Response.WriteAsync("token验证失败");
+                _logger.LogDebug($"token验证失败: {authorization.FirstOrDefault() ?? "Headers without Authorization"}"); // 
                 return;
             }
             await _next.Invoke(httpContext);

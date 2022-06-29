@@ -25,9 +25,11 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
+
                 //if (requestInfo.Pid != "pid_123")
                 //{
-                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(requestInfo, _options)}");
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(requestInfo, _options)}");
                 //    return BadRequest("");
                 //}
 
@@ -36,7 +38,7 @@ namespace PayCenter.Controllers
 
                 };
 
-                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {JsonSerializer.Serialize(customer, _options)}");
+                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {JsonSerializer.Serialize(customer, _options)}");
                 return Ok(JsonSerializer.Serialize(customer, _options));
             }
             catch (Exception ex)

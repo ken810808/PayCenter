@@ -26,23 +26,24 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
                     {
                         content.Add(new StringContent(requestInfo.billnos), nameof(requestInfo.billnos));
-                        content.Add(new StringContent(requestInfo.key), nameof(requestInfo.key)); // 12345 +  md5(gw_netpay_123qwe+ billnos)
-                        _logger.LogDebug($"{"請求參數"}: {JsonSerializer.Serialize(requestInfo, _options)}");
+                        content.Add(new StringContent(requestInfo.key), nameof(requestInfo.key)); // 12345 + md5(gw_netpay_123qwe+ billnos)
 
                         var response = client.PostAsync(requestUrl, content).Result;
                         var result = response.Content.ReadAsStringAsync().Result;
                         if (!response.IsSuccessStatusCode)
                         {
-                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, {result}");
+                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, 返回參數: {result}");
                             return BadRequest(result);
                         }
 
-                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {result}");
+                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {result}");
                         return Ok(result);
                     }
                 }

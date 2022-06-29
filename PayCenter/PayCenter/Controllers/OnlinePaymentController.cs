@@ -32,6 +32,8 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(firstModel, _options)}");
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
@@ -45,17 +47,16 @@ namespace PayCenter.Controllers
                         content.Add(new StringContent(firstModel.cuslevel), nameof(firstModel.cuslevel)); // 0
                         content.Add(new StringContent(firstModel.keycode), nameof(firstModel.keycode));  // 数据签名=md5(loginname + product + newaccount + grade +预定字符串, 8C16771746843D4764C63A0F9D0DAB42
                         content.Add(new StringContent(firstModel.type), nameof(firstModel.type)); // 18
-                        _logger.LogDebug($"{"請求參數"}: {JsonSerializer.Serialize(firstModel, _options)}");
 
                         var response = client.PostAsync(firstRequestUrl, content).Result;
                         var result = response.Content.ReadAsStringAsync().Result;
                         if (!response.IsSuccessStatusCode)
                         {
-                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, {result}");
+                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, 返回參數: {result}");
                             return BadRequest(result);
                         }
 
-                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {result}");
+                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {result}");
                         return Ok(result);
                     }
                 }
@@ -76,6 +77,8 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(secondModel, _options)}");
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
@@ -95,13 +98,12 @@ namespace PayCenter.Controllers
                         content.Add(new StringContent(secondModel.ip), nameof(secondModel.ip));
                         content.Add(new StringContent(secondModel.keycode), nameof(secondModel.keycode));  // 数据签名=md5(loginname + newaccount + product + amount + grade +预定字符串, 9db50407d8b8c7ace90468abe6b7eb62
                         content.Add(new StringContent(secondModel.cuslevel), nameof(secondModel.cuslevel)); // 0
-                        _logger.LogDebug($"{"請求參數"}: {JsonSerializer.Serialize(secondModel, _options)}");
 
                         var response = client.PostAsync(secondRequestUrl, content).Result;
                         var result = response.Content.ReadAsStringAsync().Result;
                         if (!response.IsSuccessStatusCode)
                         {
-                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, {result}");
+                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, 返回參數: {result}");
                             return BadRequest(result);
                         }
 
@@ -109,7 +111,7 @@ namespace PayCenter.Controllers
                         _logger.LogDebug($"第三段請求keycode: {Md5Helper.ToMd5(secondModel.loginname + secondModel.amount + secondModel.product + secondModel.currency + secondResponse.billno + defaultString)}");
                         Console.WriteLine($"第三段請求keycode: {Md5Helper.ToMd5(secondModel.loginname + secondModel.amount + secondModel.product + secondModel.currency + secondResponse.billno + defaultString)}");
 
-                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {result}");
+                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {result}");
                         return Ok(result);
                     }
                 }
@@ -130,6 +132,8 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(thirdModel, _options)}");
+
                 using (var client = new HttpClient())
                 {
                     using (var content = new MultipartFormDataContent())
@@ -141,20 +145,19 @@ namespace PayCenter.Controllers
                         content.Add(new StringContent(thirdModel.billno), nameof(thirdModel.billno));
                         content.Add(new StringContent(thirdModel.keycode), nameof(thirdModel.keycode)); // 数据签名=md5(loginname + amount + product+ currency + billno +预定字符串)
                         content.Add(new StringContent(thirdModel.customerType), nameof(thirdModel.customerType)); //1
-                        _logger.LogDebug($"{"請求參數"}: {JsonSerializer.Serialize(thirdModel, _options)}");
 
                         var response = client.PostAsync(thirdRequestUrl, content).Result;
                         var result = response.Content.ReadAsStringAsync().Result;
                         if (!response.IsSuccessStatusCode)
                         {
-                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, {result}");
+                            _logger.LogDebug($"{nameof(StatusCodes.Status400BadRequest)}, 返回參數: {result}");
                             return BadRequest(result);
                         }
 
                         _logger.LogDebug($"ValidateOrders key: {12345 + Md5Helper.ToMd5("gw_netpay_123qwe" + thirdModel.billno)}");
                         Console.WriteLine($"ValidateOrders key: {12345 + Md5Helper.ToMd5("gw_netpay_123qwe" + thirdModel.billno)}");
 
-                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {result}");
+                        _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {result}");
                         return Ok(result);
                     }
                 }

@@ -26,29 +26,31 @@ namespace PayCenter.Controllers
         {
             try
             {
-                var errorInfo = new ErrorInfo();
-                if (!Int32.TryParse(requestInfo.Amount, out int amount) ||
-                    !Int32.TryParse(requestInfo.Billno, out int billno) ||
-                    !Int32.TryParse(requestInfo.ProductId, out int productId) ||
-                    !Int32.TryParse(requestInfo.MerchantNo, out int merchantNo) ||
-                    !Enum.TryParse(requestInfo.OrderType, out OrderType orderType))
-                {
-                    errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = "BAD_REQUEST";
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
-                    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
-                }
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
+
+                //var errorInfo = new ErrorInfo();
+                //if (!Int32.TryParse(requestInfo.Amount, out int amount) ||
+                //    !Int32.TryParse(requestInfo.Billno, out int billno) ||
+                //    !Int32.TryParse(requestInfo.ProductId, out int productId) ||
+                //    !Int32.TryParse(requestInfo.MerchantNo, out int merchantNo) ||
+                //    !Enum.TryParse(requestInfo.OrderType, out OrderType orderType))
+                //{
+                //    errorInfo.Code = "BAD_REQUEST";
+                //    errorInfo.Message = "BAD_REQUEST";
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
+                //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
+                //}
 
 
-                if (requestInfo.Currency != "VND" ||
-                    orderType != OrderType.FastPay
-                    )
-                {
-                    errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = "BAD_REQUEST";
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
-                    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
-                }
+                //if (requestInfo.Currency != "VND" ||
+                //    orderType != OrderType.FastPay
+                //    )
+                //{
+                //    errorInfo.Code = "BAD_REQUEST";
+                //    errorInfo.Message = "BAD_REQUEST";
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
+                //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
+                //}
 
                 var successInfo = new SuccessInfo
                 {
@@ -56,7 +58,7 @@ namespace PayCenter.Controllers
                     Message = ""
                 };
 
-                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {JsonSerializer.Serialize(successInfo, _options)}");
+                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {JsonSerializer.Serialize(successInfo, _options)}");
                 return Ok(JsonSerializer.Serialize(successInfo, _options));
             }
             catch (Exception ex)

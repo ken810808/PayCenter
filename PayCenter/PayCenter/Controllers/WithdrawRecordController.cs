@@ -26,26 +26,28 @@ namespace PayCenter.Controllers
         {
             try
             {
-                var errorInfo = new ErrorInfo();
-                if (!Enum.TryParse(requestInfo.Flag, out WithDrawFlag withDrawFlag) ||
-                   !Int32.TryParse(requestInfo.PageNum, out int pageNum) ||
-                   !Int32.TryParse(requestInfo.PageSize, out int pageSize))
-                {
-                    errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = "BAD_REQUEST";
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
 
-                    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
-                }
+                //var errorInfo = new ErrorInfo();
+                //if (!Enum.TryParse(requestInfo.Flag, out WithDrawFlag withDrawFlag) ||
+                //   !Int32.TryParse(requestInfo.PageNum, out int pageNum) ||
+                //   !Int32.TryParse(requestInfo.PageSize, out int pageSize))
+                //{
+                //    errorInfo.Code = "BAD_REQUEST";
+                //    errorInfo.Message = "BAD_REQUEST";
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
 
-                if (requestInfo.Pid != "pid_123" ||
-                    withDrawFlag != WithDrawFlag.Approved)
-                {
-                    errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = "BAD_REQUEST";
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
-                    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
-                }
+                //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
+                //}
+
+                //if (requestInfo.Pid != "pid_123" ||
+                //    withDrawFlag != WithDrawFlag.Approved)
+                //{
+                //    errorInfo.Code = "BAD_REQUEST";
+                //    errorInfo.Message = "BAD_REQUEST";
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
+                //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
+                //}
 
                 var recordList = new List<Record>()
                 {
@@ -55,7 +57,7 @@ namespace PayCenter.Controllers
                     }
                 };
 
-                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {JsonSerializer.Serialize(recordList, _options)}");
+                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {JsonSerializer.Serialize(recordList, _options)}");
                 return Ok(JsonSerializer.Serialize(recordList, _options));
             }
             catch (Exception ex)

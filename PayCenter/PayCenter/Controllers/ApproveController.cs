@@ -25,6 +25,8 @@ namespace PayCenter.Controllers
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
+
                 //var errorInfo = new ErrorInfo();
                 //if (!Enum.TryParse(requestInfo.RequestType, out RequestType requestType) ||
                 //    !Enum.TryParse(requestInfo.UserType, out UserType userType) ||
@@ -33,7 +35,7 @@ namespace PayCenter.Controllers
                 //{
                 //    errorInfo.Code = "BAD_REQUEST";
                 //    errorInfo.Message = "BAD_REQUEST";
-                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                 //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 //}
 
@@ -48,7 +50,7 @@ namespace PayCenter.Controllers
                 //{
                 //    errorInfo.Code = "BAD_REQUEST";
                 //    errorInfo.Message = "BAD_REQUEST";
-                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                //    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                 //    return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 //}
 

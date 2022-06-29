@@ -29,32 +29,34 @@ namespace PayCenter.Controllers
         [HttpPost]
         [Route("token")]
         // 为其他接口调用取得Token，将token放入header(Authorization)裡面，校验调用者的身份是否合法
-        public ActionResult Post([FromBody] RequestInfo requestParam)
+        public ActionResult Post([FromBody] RequestInfo requestInfo)
         {
             try
             {
+                _logger.LogDebug($"請求參數: {JsonSerializer.Serialize(requestInfo, _options)}");
+
                 var errorInfo = new ErrorInfo();
-                if (requestParam.Pid != "V26")
+                if (requestInfo.Pid != "V26")
                 {
                     errorInfo.Code = "BAD_REQUEST";
                     errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidPid);
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
 
-                if (requestParam.Account != "qbtestuser")
+                if (requestInfo.Account != "qbtestuser")
                 {
                     errorInfo.Code = "BAD_REQUEST";
                     errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidAccount);
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
 
-                if (requestParam.Pwd != "qbtest123456")
+                if (requestInfo.Pwd != "qbtest123456")
                 {
                     errorInfo.Code = "BAD_REQUEST";
                     errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidPwd);
-                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, {JsonSerializer.Serialize(errorInfo, _options)}");
+                    _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
 
@@ -66,7 +68,7 @@ namespace PayCenter.Controllers
                     Token = "token_123"
                 };
 
-                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, {JsonSerializer.Serialize(tokenInfo, _options)}");
+                _logger.LogDebug($"{nameof(StatusCodes.Status200OK)}, 返回參數: {JsonSerializer.Serialize(tokenInfo, _options)}");
                 return Ok(JsonSerializer.Serialize(tokenInfo, _options));
             }
 
