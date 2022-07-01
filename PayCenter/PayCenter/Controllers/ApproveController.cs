@@ -17,10 +17,14 @@ namespace PayCenter.Controllers
             _options = options;
         }
 
+        /// <summary>
+        /// 通知业务系统批准或拒绝存取款提案
+        /// </summary>
+        /// <param name="requestInfo"></param>
+        /// <returns></returns>
         [HttpPut]
-        [MiddlewareFilter(typeof(TokenAuthMiddlewarePipeline))]
+        [MiddlewareFilter(typeof(MiddlewarePipeline))]
         [Route("approve")]
-        // 通知业务系统批准或拒绝存取款提案
         public ActionResult Put([FromBody] RequestInfo requestInfo)
         {
             try

@@ -18,10 +18,14 @@ namespace PayCenter.Controllers
             _options = options;
         }
 
+        /// <summary>
+        /// 读取已审核通过（flag 等于1）的取款提案数据，为会员付款
+        /// </summary>
+        /// <param name="requestInfo"></param>
+        /// <returns></returns>
         [HttpPost]
-        [MiddlewareFilter(typeof(TokenAuthMiddlewarePipeline))]
+        [MiddlewareFilter(typeof(MiddlewarePipeline))]
         [Route("withdraw_record")]
-        // 读取已审核通过（flag 等于1）的取款提案数据，为会员付款
         public ActionResult Post([FromBody] RequestInfo requestInfo)
         {
             try

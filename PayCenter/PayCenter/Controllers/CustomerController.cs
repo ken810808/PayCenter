@@ -17,10 +17,14 @@ namespace PayCenter.Controllers
             _options = options;
         }
 
+        /// <summary>
+        /// 会员通过在线支付存款时校验账号是否存在，并且是否为可存款类型账号。返回有效的会员
+        /// </summary>
+        /// <param name="requestInfo"></param>
+        /// <returns></returns>
         [HttpGet]
-        [MiddlewareFilter(typeof(TokenAuthMiddlewarePipeline))]
+        [MiddlewareFilter(typeof(MiddlewarePipeline))]
         [Route("customer")]
-        // 会员通过在线支付存款时校验账号是否存在，并且是否为可存款类型账号。返回有效的会员
         public ActionResult Get([FromBody] RequestInfo requestInfo)
         {
             try

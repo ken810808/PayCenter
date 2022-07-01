@@ -18,10 +18,14 @@ namespace PayCenter.Controllers
             _options = options;
         }
 
+        /// <summary>
+        /// 当会员通过在线支付存款成功后，通过该接口给会员加额度
+        /// </summary>
+        /// <param name="requestInfo"></param>
+        /// <returns></returns>
         [HttpPut]
-        [MiddlewareFilter(typeof(TokenAuthMiddlewarePipeline))]
+        [MiddlewareFilter(typeof(MiddlewarePipeline))]
         [Route("pay")]
-        //当会员通过在线支付存款成功后，通过该接口给会员加额度
         public ActionResult Put([FromBody] RequestInfo requestInfo)
         {
             try
@@ -152,7 +156,7 @@ namespace PayCenter.Controllers
             /// 订单类型
             /// </summary>
             [JsonPropertyName("orderType")]
-            public string OrderType { get; set; }
+                 public string OrderType { get; set; }
 
             /// <summary>
             /// 虚拟币汇率（目前只有比特币）

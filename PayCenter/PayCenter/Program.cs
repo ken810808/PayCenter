@@ -1,4 +1,5 @@
 using NLog.Web;
+using PayCenter.MiddleWares;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +15,6 @@ builder.Host.UseNLog();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -25,7 +24,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSingleton<JsonSerializerOptions>(new JsonSerializerOptions()
 {
     Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    WriteIndented = false,
+    WriteIndented = true,
 });
 
 var app = builder.Build();
@@ -57,5 +56,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseRequestMiddleware();
 
 app.Run();

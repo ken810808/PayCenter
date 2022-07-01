@@ -25,10 +25,13 @@ namespace PayCenter.Controllers
             return Ok("測試接口正常");
         }
 
-
+        /// <summary>
+        /// 为其他接口调用取得Token，将token放入header(Authorization)裡面，校验调用者的身份是否合法
+        /// </summary>
+        /// <param name="requestInfo"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("token")]
-        // 为其他接口调用取得Token，将token放入header(Authorization)裡面，校验调用者的身份是否合法
+        [Route("token")]        
         public ActionResult Post([FromBody] RequestInfo requestInfo)
         {
             try

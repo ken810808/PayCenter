@@ -1,6 +1,6 @@
 ﻿namespace PayCenter.MiddleWares
 {
-    public class TokenAuthMiddlewarePipeline
+    public class MiddlewarePipeline
     {
         public void Configure(IApplicationBuilder app)
         {
