@@ -150,7 +150,7 @@ namespace PayCenter.Controllers
             /// 手续费
             /// </summary>
             [JsonPropertyName("handleAmount")]
-            public string? HandleAmount { get; set; }
+            public decimal? HandleAmount { get; set; }
 
             /// <summary>
             /// 订单类型
