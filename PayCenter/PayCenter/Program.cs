@@ -24,7 +24,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddSingleton<JsonSerializerOptions>(new JsonSerializerOptions()
 {
     Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-    WriteIndented = true,
+    WriteIndented = false,
+    
 });
 
 var app = builder.Build();
@@ -58,5 +59,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseRequestMiddleware();
+app.UseResponseMiddleware();
 
 app.Run();

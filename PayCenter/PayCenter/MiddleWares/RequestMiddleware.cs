@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace PayCenter.MiddleWares
 {
@@ -19,6 +20,8 @@ namespace PayCenter.MiddleWares
 
         public async Task Invoke(HttpContext httpContext)
         {
+            string requestBody;
+
             httpContext.Request.EnableBuffering();
             using (var bodyReader = new StreamReader(stream: httpContext.Request.Body,
                                                      encoding: Encoding.UTF8,
@@ -26,10 +29,11 @@ namespace PayCenter.MiddleWares
                                                      bufferSize: 1024,
                                                      leaveOpen: true))
             {
-                var body = await bodyReader.ReadToEndAsync();
-                _logger.LogDebug($"RequestPath: {httpContext.Request.Path}, RequestBody: {body}");
+                requestBody = await bodyReader.ReadToEndAsync();
+                httpContext.Request.Body.Seek(0, SeekOrigin.Begin);
             }
-            httpContext.Request.Body.Position = 0;
+
+            _logger.LogDebug($"RequestPath: {httpContext.Request.Path}, RequestBody: {JsonSerializer.Serialize(requestBody, _options)}");
 
             await _next(httpContext);
         }
