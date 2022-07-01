@@ -89,13 +89,13 @@ namespace PayCenter.Controllers
             /// 页码
             /// </summary>
             [JsonPropertyName("pageNum")]
-            public string PageNum { get; set; }
+            public int PageNum { get; set; }
 
             /// <summary>
             /// 分页大小
             /// </summary>
             [JsonPropertyName("pageSize")]
-            public string PageSize { get; set; }
+            public int PageSize { get; set; }
         }
 
         public class Record
