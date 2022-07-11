@@ -2,7 +2,7 @@
 
 namespace PayCenter.Enums
 {
-    public enum TokenMessages
+    public enum TokenMessage
     {
         [Description("账号错误")]
         invalidAccount = 0,

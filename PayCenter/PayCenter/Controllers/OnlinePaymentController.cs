@@ -91,10 +91,6 @@ namespace PayCenter.Controllers
                         content.Add(new StringContent(secondModel.amount), nameof(secondModel.amount)); // 10000
                         content.Add(new StringContent(secondModel.backurl), nameof(secondModel.backurl));
                         content.Add(new StringContent(secondModel.payid), nameof(secondModel.payid)); // 101662
-                        content.Add(new StringContent(secondModel.name), nameof(secondModel.name));
-                        content.Add(new StringContent(secondModel.pwd), nameof(secondModel.pwd));
-                        content.Add(new StringContent(secondModel.email), nameof(secondModel.email));
-                        content.Add(new StringContent(secondModel.bankCode), nameof(secondModel.bankCode));
                         content.Add(new StringContent(secondModel.ip), nameof(secondModel.ip));
                         content.Add(new StringContent(secondModel.keycode), nameof(secondModel.keycode));  // 数据签名=md5(loginname + newaccount + product + amount + grade +预定字符串, 9db50407d8b8c7ace90468abe6b7eb62
                         content.Add(new StringContent(secondModel.cuslevel), nameof(secondModel.cuslevel)); // 0
@@ -297,7 +293,7 @@ namespace PayCenter.Controllers
             /// <summary>
             /// 姓名，C07 越南站nganluong\all2pay网银支付必填
             /// </summary>
-            public string name { get; set; }
+            public string? name { get; set; }
 
             /// <summary>
             /// 币种
@@ -312,17 +308,17 @@ namespace PayCenter.Controllers
             /// <summary>
             /// 密码
             /// </summary>
-            public string pwd { get; set; }
+            public string? pwd { get; set; }
 
             /// <summary>
             /// 电子邮件，C07 越南站nganluong\all2pay网银支付必填
             /// </summary>
-            public string email { get; set; }
+            public string? email { get; set; }
 
             /// <summary>
             /// 银行编号
             /// </summary>
-            public string bankCode { get; set; }
+            public string? bankCode { get; set; }
 
             /// <summary>
             /// 玩家真实外网IP

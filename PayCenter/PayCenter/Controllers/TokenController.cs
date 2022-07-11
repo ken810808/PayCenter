@@ -31,7 +31,7 @@ namespace PayCenter.Controllers
         /// <param name="requestInfo"></param>
         /// <returns></returns>
         [HttpPost]
-        [Route("token")]        
+        [Route("token")]
         public ActionResult Post([FromBody] RequestInfo requestInfo)
         {
             try
@@ -42,7 +42,7 @@ namespace PayCenter.Controllers
                 if (requestInfo.Pid != "V26")
                 {
                     errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidPid);
+                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessage.invalidPid);
                     _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
@@ -50,7 +50,7 @@ namespace PayCenter.Controllers
                 if (requestInfo.Account != "qbtestuser")
                 {
                     errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidAccount);
+                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessage.invalidAccount);
                     _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
@@ -58,7 +58,7 @@ namespace PayCenter.Controllers
                 if (requestInfo.Pwd != "qbtest123456")
                 {
                     errorInfo.Code = "BAD_REQUEST";
-                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessages.invalidPwd);
+                    errorInfo.Message = EnumHelper.GetEnumDescription(TokenMessage.invalidPwd);
                     _logger.LogDebug($"{nameof(StatusCodes.Status401Unauthorized)}, 返回參數: {JsonSerializer.Serialize(errorInfo, _options)}");
                     return BadRequest(JsonSerializer.Serialize(errorInfo, _options));
                 }
@@ -139,8 +139,8 @@ namespace PayCenter.Controllers
             public string Code { get; set; }
 
             /// <summary>
-            /// invalid account：账号错误
-            /// invalid pwd：密码错误
+            /// invalid account：账号错误,
+            /// invalid pwd：密码错误,
             /// Invalid pid： pid错误
             /// </summary>
             [JsonPropertyName("message")]
